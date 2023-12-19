@@ -16,5 +16,4 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     description: `O email será utilizado para acessar o blog`,
   })
   email: string;
-
- }
+}

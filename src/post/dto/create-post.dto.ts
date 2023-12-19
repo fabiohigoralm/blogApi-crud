@@ -1,10 +1,9 @@
-import { Post } from '@nestjs/common';
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreatePostDto {
   id: number;
-  
+
   @IsNotEmpty()
   @ApiProperty({
     example: 'Este post fala sobre o tema...',
@@ -12,6 +11,6 @@ export class CreatePostDto {
     type: String,
   })
   content: string;
-  post: number;
   user: any;
+  comments: any;
 }

@@ -1,6 +1,12 @@
-import { Post } from "../../post/entities/post.entity";
-import { Comment } from "../../comment/entities/comment.entity";
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Post } from '../../post/entities/post.entity';
+import { Comment } from '../../comment/entities/comment.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -9,7 +15,7 @@ export class User {
 
   @Column({ length: 500, nullable: false })
   name: string;
-  
+
   @Column('text', { unique: true, nullable: false })
   email: string;
 

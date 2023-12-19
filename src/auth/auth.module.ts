@@ -9,17 +9,24 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 
 @Module({
-  imports: [UserModule, PostModule, CommentModule, JwtModule.register({
-    global: true,
-    secret: process.env.JWT_SECRET,
-    signOptions: { expiresIn: '12000s' },
-  })],
-  providers: [AuthService, {
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-  }],
+  imports: [
+    UserModule,
+    PostModule,
+    CommentModule,
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '12000s' },
+    }),
+  ],
+  providers: [
+    AuthService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
   controllers: [AuthController],
-  exports: [AuthService]
+  exports: [AuthService],
 })
-export class AuthModule {
-}
+export class AuthModule {}

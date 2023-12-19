@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Expose } from "class-transformer";
-import { IsNotEmpty , IsEmail } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
+import { IsNotEmpty, IsEmail } from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -27,4 +27,4 @@ export class CreateUserDto {
     description: `Sua senha será utilizado para criar o perfil do usuário`,
   })
   password: string;
- }
+}

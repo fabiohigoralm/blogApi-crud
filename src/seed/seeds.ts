@@ -1,9 +1,9 @@
-import { DataSource, DataSourceOptions } from "typeorm";
-import { runSeeders, SeederOptions } from "typeorm-extension";
-import MainSeeder from "./main.seeder";
-import { User } from "../user/entities/user.entity";
-import { Post } from "../post/entities/post.entity";
-import { Comment } from "../comment/entities/comment.entity";
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { runSeeders, SeederOptions } from 'typeorm-extension';
+import MainSeeder from './main.seeder';
+import { User } from '../user/entities/user.entity';
+import { Post } from '../post/entities/post.entity';
+import { Comment } from '../comment/entities/comment.entity';
 import * as dotenv from 'dotenv';
 dotenv.config();
 

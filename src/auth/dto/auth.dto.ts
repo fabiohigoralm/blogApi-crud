@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Expose } from "class-transformer";
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class AuthDto {
   @Expose()
@@ -19,5 +19,4 @@ export class AuthDto {
     description: `Sua senha será utilizado para acessar o blog`,
   })
   password: string;
-
 }

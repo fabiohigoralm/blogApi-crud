@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateCommentDto {
   id: number;
@@ -20,5 +20,4 @@ export class CreateCommentDto {
   })
   @IsNotEmpty()
   post: number;
-
 }

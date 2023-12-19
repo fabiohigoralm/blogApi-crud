@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -18,10 +17,9 @@ import { AuthModule } from './auth/auth.module';
       database: process.env.PG_DB,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       migrations: [__dirname + '/migrations/*{.ts,.js}'],
-      synchronize:true
+      synchronize: true,
     }),
-    AuthModule
-
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],

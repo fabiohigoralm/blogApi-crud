@@ -5,22 +5,31 @@ import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService,
-    private userService: UserService
-  ) { }
+  constructor(
+    private jwtService: JwtService,
+    private userService: UserService,
+  ) {}
 
   async signIn(authDto: AuthDto) {
-    const user = await this.userService.signIn(authDto.email).then((user) => {
-      return user ? user : (() => {
-        throw new Error();
-      })();
-    }).then((user) => {
-      return user.password == authDto.password ? user : (() => {
-        throw new Error();
-      })()
-    }).catch((err) => {
-      throw new UnauthorizedException();
-    });
+    const user = await this.userService
+      .signIn(authDto.email)
+      .then((user) => {
+        return user
+          ? user
+          : (() => {
+              throw new Error();
+            })();
+      })
+      .then((user) => {
+        return user.password == authDto.password
+          ? user
+          : (() => {
+              throw new Error();
+            })();
+      })
+      .catch(() => {
+        throw new UnauthorizedException();
+      });
 
     const payload = { id: user.id, email: user.email, name: user.name };
 
@@ -31,11 +40,10 @@ export class AuthService {
 
   async checkToken(token: string) {
     try {
-      const decoded = this.jwtService.verify(token.replace("Bearer ", ""));
+      const decoded = this.jwtService.verify(token.replace('Bearer ', ''));
       return decoded;
     } catch (err) {
       return false;
     }
   }
-
 }

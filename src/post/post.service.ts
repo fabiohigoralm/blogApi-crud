@@ -7,9 +7,10 @@ import { Post } from './entities/post.entity';
 
 @Injectable()
 export class PostService {
-  constructor(@InjectRepository(Post) private postRepository: Repository<Post>) { }
+  constructor(
+    @InjectRepository(Post) private postRepository: Repository<Post>,
+  ) {}
   async create(createPostDto: CreatePostDto) {
-
     const post = this.postRepository.create(createPostDto);
     return await this.postRepository.save(post);
   }
@@ -20,7 +21,9 @@ export class PostService {
 
   async findMyPosts(id, userId) {
     const posts = await this.postRepository.find({ where: { user: userId } });
-    const filter = posts.filter(post => post.id === id && post.user.id === userId);
+    const filter = posts.filter(
+      (post) => post.id === id && post.user.id === userId,
+    );
     if (filter.length === 0) {
       throw new UnauthorizedException();
     }
@@ -30,7 +33,7 @@ export class PostService {
   async findOne(id: number) {
     return await this.postRepository.findOne({
       where: { id },
-    })
+    });
   }
 
   async update(id: number, updatePostDto: UpdatePostDto) {

@@ -7,7 +7,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CommentService {
-  constructor(@InjectRepository(Comment) private commentRepository: Repository<Comment>) { }
+  constructor(
+    @InjectRepository(Comment) private commentRepository: Repository<Comment>,
+  ) {}
   async create(createCommentDto: CreateCommentDto) {
     const comment = await this.commentRepository.create({
       content: createCommentDto.content,
@@ -23,17 +25,19 @@ export class CommentService {
   }
 
   async findPost(id: number) {
-    const comments = await this.commentRepository.find()
-    const filter = comments.filter(comment => comment.post.id === id);
-    return filter.map(comment => {
+    const comments = await this.commentRepository.find();
+    const filter = comments.filter((comment) => comment.post.id === id);
+    return filter.map((comment) => {
       delete comment.post.user;
       delete comment.post.content;
       return comment;
-    })
+    });
   }
 
   async update(id: number, updateCommentDto: UpdateCommentDto) {
-    await this.commentRepository.update(id, { content: updateCommentDto.content });
+    await this.commentRepository.update(id, {
+      content: updateCommentDto.content,
+    });
     return await this.commentRepository.findOne({ where: { id } });
   }
 
@@ -42,8 +46,12 @@ export class CommentService {
   }
 
   async findMyComments(id, userId) {
-    const comments = await this.commentRepository.find({ where: { user: userId } });
-    const filter = comments.filter(comment => comment.id === id && comment.user.id === userId);
+    const comments = await this.commentRepository.find({
+      where: { user: userId },
+    });
+    const filter = comments.filter(
+      (comment) => comment.id === id && comment.user.id === userId,
+    );
     if (filter.length === 0) {
       throw new UnauthorizedException();
     }

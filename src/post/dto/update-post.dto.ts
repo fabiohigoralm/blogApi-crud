@@ -5,7 +5,6 @@ import { IsNotEmpty } from 'class-validator';
 import { Expose } from 'class-transformer';
 
 export class UpdatePostDto extends PartialType(CreatePostDto) {
-
   @Expose()
   @IsNotEmpty()
   @ApiProperty({
@@ -14,4 +13,4 @@ export class UpdatePostDto extends PartialType(CreatePostDto) {
     type: String,
   })
   content: string;
- }
+}

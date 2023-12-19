@@ -1,14 +1,11 @@
-import { Comment } from "../comment/entities/comment.entity";
-import { Post } from "../post/entities/post.entity";
-import { User } from "../user/entities/user.entity";
-import { DataSource } from "typeorm";
-import { Seeder } from "typeorm-extension";
+import { Comment } from '../comment/entities/comment.entity';
+import { Post } from '../post/entities/post.entity';
+import { User } from '../user/entities/user.entity';
+import { DataSource } from 'typeorm';
+import { Seeder } from 'typeorm-extension';
 
 export default class MainSeeder implements Seeder {
-  public async run(
-    dataSource: DataSource,
-  ): Promise<any> {
-
+  public async run(dataSource: DataSource): Promise<any> {
     const userRepository = dataSource.getRepository(User);
     const postRepository = dataSource.getRepository(Post);
     const commentRepository = dataSource.getRepository(Comment);
@@ -32,6 +29,5 @@ export default class MainSeeder implements Seeder {
     ('Comentario na postagem VZL',4,3),
     ('Comentario na postagem NQA',4,4),
     ('Comentario na postagem TIO',1,2);`);
-
   }
 }

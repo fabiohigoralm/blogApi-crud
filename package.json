@@ -1,8 +1,8 @@
 {
-  "name": "blog-crud",
+  "name": "blog-api-crud",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Fabio Almeida.",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
