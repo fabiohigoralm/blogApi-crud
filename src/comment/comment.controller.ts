@@ -1,34 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Comments')
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
+@ApiResponse({
+  status: 400,
+  description: 'Bad Request',
+})
+@ApiBearerAuth('access-token')
 @Controller('comment')
 export class CommentController {
-  constructor(private readonly commentService: CommentService) {}
+  constructor(private readonly commentService: CommentService) { }
 
+  @ApiResponse({
+    status: 201,
+    description: 'Created',
+  })
+  @ApiOperation({ summary: 'Criar um comentario' })
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentService.create(createCommentDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.commentService.findAll();
+  async create(@Req() request: Record<string, any>, @Body() createCommentDto: CreateCommentDto) {
+    createCommentDto.user = request.user.id;
+    return await this.commentService.create(createCommentDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.commentService.findOne(+id);
+  @ApiOperation({ summary: 'Todos comentarios de um post' })
+  async findOne(@Param('id') id: string) {
+    return await this.commentService.findPost(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
-    return this.commentService.update(+id, updateCommentDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.commentService.remove(+id);
-  }
 }

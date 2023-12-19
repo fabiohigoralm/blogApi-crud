@@ -3,18 +3,28 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
 describe('UserController', () => {
-  let controller: UserController;
+  let userController: UserController;
+  let userService: UserService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [UserService],
+      providers: [{
+        provide: UserService,
+        useValue: {
+          findAll: jest.fn().mockResolvedValue([]),
+          create: jest.fn().mockResolvedValue({
+          })
+        },
+      }],
     }).compile();
 
-    controller = module.get<UserController>(UserController);
+    userController = module.get<UserController>(UserController);
+    userService = module.get<UserService>(UserService);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(userController).toBeDefined();
+    expect(userService).toBeDefined();
   });
 });

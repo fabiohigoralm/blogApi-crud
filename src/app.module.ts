@@ -1,16 +1,14 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { PostModule } from './post/post.module';
-import { CommentModule } from './comment/comment.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    UserModule,
     TypeOrmModule.forRoot({
       type: process.env.DB_TYPE as any,
       host: process.env.PG_HOST,
@@ -19,12 +17,13 @@ import { CommentModule } from './comment/comment.module';
       password: process.env.PG_PASSWORD,
       database: process.env.PG_DB,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      migrations: [__dirname + '/migrations/*{.ts,.js}'],
+      synchronize:true
     }),
-    PostModule,
-    CommentModule,
+    AuthModule
+
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ConfigService],
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
-import { User } from "src/user/entities/user.entity";
-import { Comment } from "src/comment/entities/comment.entity";
+import { User } from "../../user/entities/user.entity";
+import { Comment } from "../../comment/entities/comment.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -7,10 +7,10 @@ export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('text')
+  @Column('text', { nullable: false })
   content: string;
 
-  @ManyToOne(() => User, (user) => user.posts, { eager: true, onDelete: "CASCADE" })
+  @ManyToOne(() => User, (user) => user.posts, { eager: true, onDelete: "CASCADE", nullable: false })
   @JoinColumn()
   user: User;
 

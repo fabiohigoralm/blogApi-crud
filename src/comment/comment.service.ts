@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Comment } from './entities/comment.entity';
@@ -9,18 +9,27 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class CommentService {
   constructor(@InjectRepository(Comment) private commentRepository: Repository<Comment>) { }
   async create(createCommentDto: CreateCommentDto) {
-    const comment = this.commentRepository.create(createCommentDto);
+    const comment = await this.commentRepository.create({
+      content: createCommentDto.content,
+      user: { id: createCommentDto.user },
+      post: { id: createCommentDto.post },
+    });
     return await this.commentRepository.save(comment);
   }
 
-  async findAll() {
-    return await this.commentRepository.find();
+  async findOne(id: number) {
+    const comment = await this.commentRepository.findOne({ where: { id } });
+    return comment;
   }
 
-  async findOne(id: number) {
-    return await this.commentRepository.findOne({
-      where: { id },
-    });
+  async findPost(id: number) {
+    const comments = await this.commentRepository.find()
+    const filter = comments.filter(comment => comment.post.id === id);
+    return filter.map(comment => {
+      delete comment.post.user;
+      delete comment.post.content;
+      return comment;
+    })
   }
 
   async update(id: number, updateCommentDto: UpdateCommentDto) {
@@ -30,5 +39,14 @@ export class CommentService {
 
   async remove(id: number) {
     return await this.commentRepository.delete(id);
+  }
+
+  async findMyComments(id, userId) {
+    const comments = await this.commentRepository.find({ where: { user: userId } });
+    const filter = comments.filter(comment => comment.id === id && comment.user.id === userId);
+    if (filter.length === 0) {
+      throw new UnauthorizedException();
+    }
+    return filter;
   }
 }

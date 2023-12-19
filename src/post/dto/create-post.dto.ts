@@ -1,4 +1,17 @@
+import { Post } from '@nestjs/common';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty } from "class-validator";
+
 export class CreatePostDto {
+  id: number;
+  
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'Este post fala sobre o tema...',
+    description: `O conteudo do post`,
+    type: String,
+  })
   content: string;
-  userId: number;
- }
+  post: number;
+  user: any;
+}
