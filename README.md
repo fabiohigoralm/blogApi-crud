@@ -23,18 +23,34 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
-
+This project is a small application of a blog API in Node.js. The project structure includes essential routes and endpoints for CRUD operations, user creation, and Jwt authentications.
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+### Api Documentation
+
+[Swagger](http://localhost:3000/api)
+- Api documentation run in http://localhost:3000/api
+
+
+### Technology
+- Docker
+- TypeOrm
+- Postgres
+- Jwt
 
 ## Installation
 
 ```bash
 $ npm install
+$ docker compose build
 ```
 
 ## Running the app
 
 ```bash
+$ docker compose up
+$ npm run seed
+
 # development
 $ npm run start
 

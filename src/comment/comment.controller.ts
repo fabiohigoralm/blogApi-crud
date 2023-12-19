@@ -21,7 +21,7 @@ export class CommentController {
     status: 201,
     description: 'Created',
   })
-  @ApiOperation({ summary: 'Criar um comentario' })
+  @ApiOperation({ summary: 'Create a new comment' })
   @Post()
   async create(@Req() request: Record<string, any>, @Body() createCommentDto: CreateCommentDto) {
     createCommentDto.user = request.user.id;
@@ -29,7 +29,7 @@ export class CommentController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Todos comentarios de um post' })
+  @ApiOperation({ summary: 'Find comments by post ID' })
   async findOne(@Param('id') id: string) {
     return await this.commentService.findPost(+id);
   }

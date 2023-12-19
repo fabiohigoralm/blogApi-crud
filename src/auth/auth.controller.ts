@@ -5,7 +5,7 @@ import { ApiOperation, ApiResponse, ApiTags, } from '@nestjs/swagger';
 import { AuthDto } from './dto/auth.dto';
 import { Token } from './dto/token';
 
-@ApiTags('Login')
+@ApiTags('Sign in')
 @Controller()
 export class AuthController {
   constructor(private authService: AuthService) { }
@@ -24,16 +24,10 @@ export class AuthController {
     status: 400,
     description: 'Bad Request',
   })
-  @ApiOperation({ summary: 'Fazer login' })
+  @ApiOperation({ summary: 'Sign in' })
   @Public()
-  @Post('login')
+  @Post('sign-in')
   signIn(@Body() authDto: AuthDto) {
     return this.authService.signIn(authDto);
   }
-
-  // @Get('profile')
-  // async getProfile(@Headers('authorization') token: string, @Req() request: Request) {
-  //   const decoded = await this.authService.checkToken(token);
-  //   return decoded;
-  // }
 }

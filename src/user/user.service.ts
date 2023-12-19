@@ -15,7 +15,7 @@ export class UserService {
   }
 
   async findAll() {
-    return await this.userRepository.find();
+    return await this.userRepository.createQueryBuilder('user').addSelect('user.password').getMany();
   }
 
   async findOne(id: number) {

@@ -21,7 +21,7 @@ export class PostController {
     status: 401,
     description: 'Unauthorized',
   })
-  @ApiOperation({ summary: 'Criar uma postagem' })
+  @ApiOperation({ summary: 'Create a new post' })
   @ApiBearerAuth('access-token')
   @Post()
   async create(@Req() request: Record<string, any>, @Body() createPostDto: CreatePostDto) {
@@ -34,7 +34,8 @@ export class PostController {
     status: 200,
     description: 'OK',
   })
-  @ApiOperation({ summary: 'Buscar todos os posts' })
+  @ApiOperation({ summary: 'Find all posts' })
+  @Public()
   @Get()
   async findAll() {
     return await this.postService.findAll();
@@ -44,7 +45,7 @@ export class PostController {
     status: 200,
     description: 'OK',
   })
-  @ApiOperation({ summary: 'Buscar post por ID' })
+  @ApiOperation({ summary: 'Find post by ID' })
   @Public()
   @Get(':id')
   async findOne(@Param('id') id: string) {
@@ -63,7 +64,7 @@ export class PostController {
     status: 400,
     description: 'Bad Request',
   })
-  @ApiOperation({ summary: 'Atualizar post por ID' })
+  @ApiOperation({ summary: 'Update post by ID' })
   @ApiBearerAuth('access-token')
   @Patch(':id')
   async update(@Param('id') id: string, @Req() request: Record<string, any>, @Body() updatePostDto: UpdatePostDto) {
@@ -80,7 +81,7 @@ export class PostController {
     status: 401,
     description: 'Unauthorized',
   })
-  @ApiOperation({ summary: 'Deletar post por ID' })
+  @ApiOperation({ summary: 'Delete post by ID' })
   @ApiBearerAuth('access-token')
   @Delete(':id')
   async remove(@Param('id') id: string, @Req() request: Record<string, any>) {
